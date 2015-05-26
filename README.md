@@ -1,7 +1,7 @@
 SPANStore: Cost-Effective Geo-Replicated Storage Spanning Multiple Cloud Services
 =================================================================================
 
-This code contains a python implementation of two SPANStore formulations.
+This code contains a python implementation of the two SPANStore formulations.
 
 See details about SPANStore in our [paper](http://zwu.me/papers/sosp13.pdf).
 
@@ -13,12 +13,13 @@ Requirements
 ------------
 Python >= 2.6
 
-CPLEX ILP solver >= 1.2
+CPLEX ILP solver >= 1.2 (The code is only tested using CPLEX 1.2)
 
 Usage
 -----
 **1 . Generate ILP formulation**
 
+Following command generates a ILP formulation file (formulation.lp) based on input files and arguments. *formulation.lp* is solvable by CPLEX solver.
 ```
 python strong(eventual)_consistency_formulation_generator.py <storage latency matrix> <VM latency matrix> <cloud pricing matrix> <application workload file> <PUT SLO in ms> <GET SLO in ms> <which percentile latency to consider> <# of failures to tolerate>
 ```
@@ -47,14 +48,14 @@ See example workload files in *test folder*.
 
 For example, to generate ILP formulation of strong consistency, you can run
 ```
-python src/strong_consistency_formulation_generator.py data/storage_latency_matrix_percentile data/vm_latency_matrix_percentile data/region_price_index test/dependency 1000 500 50 2
+python src/strong_consistency_formulation_generator.py data/storage_latency_matrix_percentile data/vm_latency_matrix_percentile data/region_price_index test/workload_test 1000 500 50 2
 ```
 
 **2 . Solve ILP using CPLEX**
 
 Solve the generated formulation using CPLEX solver.
 ```
-ilpsolver formulation.pl result
+ilpsolver formulation.lp result
 ```
 CPLEX solver is not included in this repo.
 
