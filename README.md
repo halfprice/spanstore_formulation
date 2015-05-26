@@ -17,7 +17,7 @@ CPLEX ILP solver >= 1.2
 
 Usage
 -----
-1 . Generate ILP formulation
+**1 . Generate ILP formulation**
 
 ```
 python strong(eventual)_consistency_formulation_generator.py <storage latency matrix> <VM latency matrix> <cloud pricing matrix> <application workload file> <PUT SLO in ms> <GET SLO in ms> <which percentile latency to consider> <# of failures to tolerate>
@@ -50,7 +50,7 @@ For example, to generate ILP formulation of strong consistency, you can run
 python src/strong_consistency_formulation_generator.py data/storage_latency_matrix_percentile data/vm_latency_matrix_percentile data/region_price_index test/dependency 1000 500 50 2
 ```
 
-2 . Solve ILP using CPLEX
+**2 . Solve ILP using CPLEX**
 
 Solve the generated formulation using CPLEX solver.
 ```
@@ -58,7 +58,7 @@ ilpsolver formulation.pl result
 ```
 CPLEX solver is not included in this repo.
 
-3 . Parse results
+**3 . Parse results**
 
 You can parse the results by using the simple parser provided, or write your own parser.
 ```
