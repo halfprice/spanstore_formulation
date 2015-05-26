@@ -8,7 +8,6 @@ MAX_LATENCY = 1000000
 def init():
     global datacenter_number
     global datacenter_number_max
-    datacenter_number_max = 19
 
     global datacenter_in_use
     datacenter_in_use = []
@@ -17,6 +16,7 @@ def init():
     for i in range(13, 19):
         datacenter_in_use.append(i)
     datacenter_number = len(datacenter_in_use)
+    datacenter_number_max = 19
 
     global latency
     latency = {}
@@ -475,8 +475,8 @@ def output_binary():
 def main():
 
     if len(sys.argv) != 9:
-        print 'usage: python generating_formulation.py <storage latency matrix> <VM latency matrix> <cloud pricing matrix> <application workload file> <PUT SLO in ms> <GET SLO in ms> <which percentile latency to consider> <# of failures to tolerate>'
-        exit(0)
+        print 'usage: python strong_consistency_formulation_generator.py <storage latency matrix> <VM latency matrix> <cloud pricing matrix> <application workload file> <PUT SLO in ms> <GET SLO in ms> <which percentile latency to consider> <# of failures to tolerate>'
+        exit(1)
 
     init()
 
