@@ -7,7 +7,7 @@ Cloud data center and index mapping
 
 Measurement data
 ----------------
-The measurement data in *storage_latency_matrix_percentile* and *vm_latency_matrix_percentile* are gathered during June 2013.
+The measurement data in *storage_latency_matrix_percentile* and *vm_latency_matrix_percentile* are gathered in June 2013.
 
 The format of those two files is:
 ```
@@ -16,7 +16,7 @@ The format of those two files is:
 
 Cloud pricing
 -------------
-File *region_price_index* reflects the pricing at June 2013.
+File *region_price_index* reflects the pricing in June 2013.
 
 The format is:
 ```

@@ -1,7 +1,7 @@
 SPANStore: Cost-Effective Geo-Replicated Storage Spanning Multiple Cloud Services
 =================================================================================
 
-This code contains a python implementation of the two SPANStore formulations.
+This code contains a python implementation of the SPANStore formulations.
 
 See details about SPANStore in our [paper](http://zwu.me/papers/sosp13.pdf).
 
@@ -13,7 +13,7 @@ Requirements
 ------------
 Python >= 2.6
 
-CPLEX ILP solver >= 1.2 (The code is only tested using CPLEX 1.2)
+CPLEX ILP solver >= 1.2 (The code is only tested with CPLEX 1.2)
 
 Usage
 -----
@@ -23,7 +23,7 @@ Following command generates a ILP formulation file (formulation.lp) based on inp
 ```
 python strong(eventual)_consistency_formulation_generator.py <storage latency matrix> <VM latency matrix> <cloud pricing matrix> <application workload file> <PUT SLO in ms> <GET SLO in ms> <which percentile latency to consider> <# of failures to tolerate>
 ```
-with the meaning arguments
+with the meaning of arguments:
 ```
 <storage latency matrix>: latency of storage request issued from one data center to another data center. See details in the data folder.
 
@@ -40,20 +40,22 @@ line 1: averagesize <average object size in kb>
 line 2: overallsize <overall object size in kb>
 line 3: time <how long does the objects are stored in storage in days>
 
-After line 3 there are n lines with each line indicating the workload of one data center in the access set. N is the size of access set.
+After line 3, there are N lines with each line indicating the workload of one data center in access set. N is the size of access set.
 Each line is in the format:
   <data center index> <# of PUTs from clients> <# of GETs from clients>
 ```
 See example workload files in *test folder*.
 
-For example, to generate ILP formulation of strong consistency, you can run
+Note that cloud data centers are indexed and the formulation generator only uses index numbers to indicate data centers. See details in [data folder](data/README.md).
+
+As an example, to generate ILP formulation of strong consistency, you can run
 ```
 python src/strong_consistency_formulation_generator.py data/storage_latency_matrix_percentile data/vm_latency_matrix_percentile data/region_price_index test/workload_test 1000 500 50 2
 ```
 
 **2 . Solve the ILP using CPLEX**
 
-Solve the generated formulation using CPLEX solver.
+After generating the formulation file, you can solve it using CPLEX solver.
 ```
 ./ilpsolver formulation.lp result
 ```
