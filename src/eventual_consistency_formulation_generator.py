@@ -503,7 +503,7 @@ def output_general():
 
     fout.write('\nGENERAL\n')
 
-    #output F, F is used to simplify line 22 in the formulation.
+    # output F, F is used to simplify line 22 in the formulation.
     # It stands for the number of objects that are sent through link (i,j), therefore, it is a general variable.
     for i in datacenter_in_use:
         for j in datacenter_in_use:

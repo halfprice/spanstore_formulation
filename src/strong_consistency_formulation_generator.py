@@ -185,10 +185,10 @@ def output_objective_function():
                             fout.write(' + ')
 
                         if not has_m[j][k]:
-                            fout.write(' '+str(dependency[j]['put_rate'] * network_price[j][k] * object_size)+'  M_'+str(j)+'_'+str(k)+' + ')
+                            fout.write(' '+str(dependency[j]['put_rate'] * network_price[j][k] * object_size)+'  R_'+str(j)+'_'+str(k)+' + ')
                             has_m[j][k] = True
-                        fout.write(' '+str(dependency[j]['put_rate'] * put_price[i])+'  R_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
-                        fout.write(' + '+str(dependency[j]['put_rate'] * network_price[k][i] * object_size)+'  R_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
+                        fout.write(' '+str(dependency[j]['put_rate'] * put_price[i])+'  F_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
+                        fout.write(' + '+str(dependency[j]['put_rate'] * network_price[k][i] * object_size)+'  F_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
                         fout.write('\n')
                         need_operation = True
 
@@ -287,11 +287,11 @@ def output_relay_constraints():
                         else:
                             fout.write(' M1_'+str(i)+'_'+str(k)+' : ')
 
-                        fout.write(' R_'+str(i)+'_'+str(j)+'_'+str(k)+' ')
+                        fout.write(' F_'+str(i)+'_'+str(j)+'_'+str(k)+' ')
                         need_operation = True
 
                 if need_operation:
-                    fout.write(' - M_'+str(i)+'_'+str(k)+' >= 0\n')
+                    fout.write(' - R_'+str(i)+'_'+str(k)+' >= 0\n')
 
                 need_operation = False
                 for j in datacenter_in_use:#range(datacenter_number):
@@ -301,11 +301,11 @@ def output_relay_constraints():
                         else:
                             fout.write(' M2_'+str(i)+'_'+str(k)+' : ')
 
-                        fout.write(' R_'+str(i)+'_'+str(j)+'_'+str(k)+' ')
+                        fout.write(' F_'+str(i)+'_'+str(j)+'_'+str(k)+' ')
                         need_operation = True
 
                 if need_operation:
-                    fout.write(' - '+str(datacenter_number)+'  M_'+str(i)+'_'+str(k)+' <=0 \n')
+                    fout.write(' - '+str(datacenter_number)+'  R_'+str(i)+'_'+str(k)+' <=0 \n')
 
     # Use Pi,j to eliminate quadratic
     # Line 30 in the formulation.
@@ -320,7 +320,7 @@ def output_relay_constraints():
                         else:
                             fout.write(' P1_'+str(i)+'_'+str(j)+' : ')
 
-                        fout.write(' R_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
+                        fout.write(' F_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
                         need_operation = True
 
                 if need_operation:
@@ -334,7 +334,7 @@ def output_relay_constraints():
                         else:
                             fout.write(' P2_'+str(i)+'_'+str(j)+' : ')
 
-                        fout.write(' R_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
+                        fout.write(' F_'+str(j)+'_'+str(i)+'_'+str(k)+' ')
                         need_operation = True
 
                 if need_operation:
@@ -429,14 +429,14 @@ def output_binary():
                 if in_put_slo_2(j,i):
                     fout.write(' P_'+str(i)+'_'+str(j)+'\n')
 
-    #output R, which is F_ikj variable in the formulation.
-    # Note that in here, F_ikj = R_ijk (notice the order of indexes)
+    #output F, which is F_ikj variable in the formulation.
+    # Note that in here, F_ijk = F_ikj in the paper (notice the order of indexes)
     for i in dependency:
         if dependency[i]['put_rate'] > 0:
             for j in datacenter_in_use:
                 for k in datacenter_in_use:
                     if in_put_slo_3(i,j,k) and (i == k or network_price[i][j] > network_price[k][j]):
-                        fout.write(' R_'+str(i)+'_'+str(j)+'_'+str(k)+'\n')
+                        fout.write(' F_'+str(i)+'_'+str(j)+'_'+str(k)+'\n')
 
     #output X, which is U_P_ijk variable in the formulation.
     for i in dependency:
@@ -455,7 +455,7 @@ def output_binary():
                     if in_get_slo(i,k) and in_put_slo_2(j,k):
                         fout.write(' Y_'+str(i)+'_'+str(j)+'_'+str(k)+'\n')
 
-    #output M, which is R_ik variable in the formulation.
+    #output R, which is R_ik variable in the formulation.
     for i in dependency:
         if dependency[i]['put_rate'] > 0:
             for k in datacenter_in_use:
@@ -465,7 +465,7 @@ def output_binary():
                         exist_j = True
                         break
                 if exist_j:
-                    fout.write(' M_'+str(i)+'_'+str(k)+'\n')
+                    fout.write(' R_'+str(i)+'_'+str(k)+'\n')
 
     #output C, which is C_i variable in the formulation.
     for i in datacenter_in_use:

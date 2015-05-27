@@ -51,11 +51,11 @@ For example, to generate ILP formulation of strong consistency, you can run
 python src/strong_consistency_formulation_generator.py data/storage_latency_matrix_percentile data/vm_latency_matrix_percentile data/region_price_index test/workload_test 1000 500 50 2
 ```
 
-**2 . Solve ILP using CPLEX**
+**2 . Solve the ILP using CPLEX**
 
 Solve the generated formulation using CPLEX solver.
 ```
-ilpsolver formulation.lp result
+./ilpsolver formulation.lp result
 ```
 CPLEX solver is not included in this repo.
 
@@ -66,7 +66,7 @@ You can parse the results by using the simple parser provided, or write your own
 python parse_result_strong.py result parsed_result
 ```
 
-The parsed_result will list any variables that is set to 1 in the optimal solution.
+The parsed_result will list all variables that is set to 1 in the optimal solution.
 
 Contact
 -------
