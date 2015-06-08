@@ -235,7 +235,7 @@ def output_put_intersection_constraints():
                         need_operation = True
 
                 if need_operation:
-                    fout.write(' > '+str(2 * number_of_failure_to_tolerate)+'\n')
+                    fout.write(' >= '+str(2 * number_of_failure_to_tolerate + 1)+'\n')
 
 
 def output_put_get_intersection_constraints():
@@ -270,7 +270,7 @@ def output_put_get_intersection_constraints():
                         need_operation = True
 
                 if need_operation:
-                    fout.write(' > '+str(2 * number_of_failure_to_tolerate)+'\n')
+                    fout.write(' >= '+str(2 * number_of_failure_to_tolerate + 1)+'\n')
 
 def output_relay_constraints():
 
